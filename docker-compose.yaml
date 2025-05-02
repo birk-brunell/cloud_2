@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  codestreamgenerator:
+    build:
+      context: ./Containers/CodeStreamGenerator
+    image: csgenerator
+    container_name: codestream-generator
+    volumes:
+      - qc-volume:/QualitasCorpus
+    networks:
+      - qc-net
+    command: TEST # or change to your actual command
+
+  codestreamconsumer:
+    build:
+      context: ./Containers/CodeStreamConsumer
+    image: csconsumer
+    container_name: codestream-consumer
+    ports:
+      - "8080:3000"
+    networks:
+      - qc-net
+
+volumes:
+  qc-volume:
+
+
+networks:
+  qc-net:
